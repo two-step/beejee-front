@@ -1,0 +1,24 @@
+.mat-column-select {
+  overflow: initial;
+}
+table {
+  width: 100%;
+}
+
+.scrolled {
+  max-height: 400px;
+  overflow: auto;
+  min-height: 500px;
+}
+
+tr{
+  cursor: pointer;
+}
+
+tr[mat-row]:hover{
+  background-color: lightgray;
+}
+
+td{
+  padding: 5px;
+}

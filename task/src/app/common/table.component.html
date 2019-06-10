@@ -1,0 +1,44 @@
+<td-message #message label="Нет данных" sublabel="Добавьте данные" icon="info" color="blue" [opened]="!dataSource.data || dataSource.data.length == 0">
+</td-message>
+  <td-search-box class="push-left push-right" showUnderline="true" placeholder="Поиск по..." [alwaysVisible]="true" (searchDebounce)="search($event)"></td-search-box>
+  <div class="scrolled">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <ng-container [matColumnDef]="column.name" *ngFor="let column of columns">
+      <ng-container *ngIf="column.checkbox">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container *ngIf="!column.checkbox">
+        <ng-container *ngIf="column.sorted">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.label}} </th>
+        </ng-container>
+        <ng-container *ngIf="!column.sorted">
+          <th mat-header-cell *matHeaderCellDef> {{column.label}} </th>
+        </ng-container>
+        <td mat-cell *matCellDef="let row"> {{row[column.name]}} </td>
+      </ng-container>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        (click)="selection.toggle(row);rowClick(row)">
+    </tr>
+  </table>
+    <mat-paginator [length]="dataSource.data.length"
+                   [pageSize]="3"
+                   showFirstLastButtons>
+    </mat-paginator>
+  </div>
+

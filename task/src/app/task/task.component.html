@@ -1,0 +1,113 @@
+<td-layout-card-over cardTitle="Task" cardSubtitle="Task details." color="none">
+<div fxLayout="row" fxLayoutAlign="space-around start">
+  <div fxFlex="10px"></div>
+  <div fxFlex>
+
+
+    <form #taskForm="ngForm" class="text-center p-5">
+      <div fxLayout="row">
+        <mat-form-field flex appearance="fill">
+          <mat-label>User Name</mat-label>
+          <input matInput
+                 #userNameElement
+                 #userNameControl="ngModel"
+                 type="text"
+                 placeholder="User Name"
+                 [(ngModel)]="task.userName"
+                 name="username"
+                 maxlength="30"
+                 required
+                 [disabled]="disabled"
+          >
+          <mat-hint align="start">
+                <span [hidden]="userNameControl.pristine" class="tc-red-600">
+                  <span [hidden]="!userNameControl.hasError('required')">Required</span>
+                </span>
+          </mat-hint>
+          <mat-hint align="end">{{userNameElement.value.length}} / 30</mat-hint>
+        </mat-form-field>
+
+      </div>
+      <div layout="row" class="push-top">
+        <mat-form-field flex appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput
+                 #emailElement
+                 #emailControl="ngModel"
+                 type="text"
+                 placeholder="Email"
+                 [(ngModel)]="task.email"
+                 name="email"
+                 maxlength="30"
+                 pattern="^[a-zA-Z0-9-]+(\.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,15})$"
+                 required
+                  [disabled]="disabled"
+          >
+          <mat-hint align="start">
+                <span [hidden]="emailControl.pristine" class="tc-red-600">
+                  <span [hidden]="!emailControl.hasError('required')">Requred</span>
+                  <span [hidden]="!emailControl.hasError('pattern')">Not correct email</span>
+                </span>
+          </mat-hint>
+          <mat-hint align="end">{{emailElement.value.length}} / 30</mat-hint>
+        </mat-form-field>
+      </div>
+      <div layout="row" class="push-top">
+        <mat-form-field flex appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea matInput
+                 #DescriptionElement
+                 #DescriptionControl="ngModel"
+                 placeholder="Description"
+                 [(ngModel)]="task.description"
+                 name="description"
+                 maxlength="2000"
+                    rows="10"
+                    required
+                    [disabled]="disabled"
+                 >
+
+          </textarea>
+          <mat-hint align="start">
+                <span [hidden]="DescriptionControl.pristine" class="tc-red-600">
+                  <span [hidden]="!DescriptionControl.hasError('required')">Required</span>
+                </span>
+          </mat-hint>
+          <mat-hint align="end">{{DescriptionElement.value.length}} / 2000</mat-hint>
+        </mat-form-field>
+
+      </div>
+      <div layout="row" class="push-top">
+        <mat-slide-toggle fxFlex="130px" [(ngModel)]="done" name="now" fxFlexAlign="center" [hidden]="!_securityService.isAdmin">Done</mat-slide-toggle>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center start">
+        <div fxFlex >
+          <img [src]="url" class="z-depth-1-half img-thumbnail mb-2 img-responsive image-size">
+        </div>
+        <div fxFlex fxFlexAlign="center">
+          <td-file-upload #fileUpload [(ngModel)]="file" defaultColor="primary" activeColor="warn" cancelColor="primary" (select)="selectEvent($event)"
+                          (upload)="uploadEvent($event)" (cancel)="cancelEvent()" accept=".png, .jpg, .gif" name="file" [disabled]="disabled" multiple>
+            <mat-icon>file_upload</mat-icon><span>Load picture</span>
+            <ng-template td-file-input-label>
+              <mat-icon>attach_file</mat-icon>
+              <span>
+        Choose file...
+      </span>
+            </ng-template>
+          </td-file-upload>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div fxFlex="10px"></div>
+</div>
+
+    <button mdbBtn style="float:left;" color="primary" mdbWavesEffect="true" (click)="save()" [disabled]="disabled  || !taskForm.valid">Save</button>
+
+</td-layout-card-over>
+
+<a mat-fab color="primary" matTooltip="Back to list" class="mat-fab-bottom-left fixed z-3" [routerLink]="['../list']">
+  <mat-icon>cancel</mat-icon>
+</a>
+

@@ -1,0 +1,32 @@
+<ng-template tdLoading="login.info" tdLoadingColor="primary">
+<div layout="column" layout-fill>
+  <div class="mat-content" layout-padding flex>
+    <div layout-gt-xs="row" layout-align-gt-xs="center start" class="margin">
+      <div flex-gt-xs="40">
+        <form class="text-center border border-light p-5" >
+
+          <p class="h4 mb-4">Sign in</p>
+          <div layout="row">
+
+          <!-- Login -->
+          <input id="login" #userControl="ngModel" name="username" class="form-control mb-4" placeholder="User Name"  [(ngModel)]="username" required>
+
+          </div>
+          <div layout="row">
+
+          <!-- Password -->
+          <input type="password" id="password" name="password" #passControl="ngModel" class="form-control mb-4" placeholder="Password" [(ngModel)]="password" required>
+
+          </div>
+          <!-- Sign in button -->
+          <button class="btn btn-info btn-block my-4" (click)="login()" >Sign in</button>
+
+          <p>Not an Administrator?
+            <a [routerLink]="['../list']">Enter as User</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-template>
